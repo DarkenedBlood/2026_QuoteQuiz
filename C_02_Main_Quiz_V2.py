@@ -159,11 +159,11 @@ class Play:
     def __init__(self, how_many):
 
         # rounds played - start with zero
-        self.rounds_played = IntVar()
-        self.rounds_played.set(0)
+        self.questions_played = IntVar()
+        self.questions_played.set(0)
 
-        self.rounds_wanted = IntVar()
-        self.rounds_wanted.set(how_many)
+        self.questions_wanted = IntVar()
+        self.questions_wanted.set(how_many)
 
         self.play_box = Toplevel()
 
@@ -232,14 +232,14 @@ class Play:
 
             control_ref_list.append(make_control_button)
 
-            # Retrieve next, stats and end button so that they can be configured
-            self.next_button = control_ref_list[0]
-            self.stats_button = control_ref_list[2]
-            self.end_game_button = control_ref_list[3]
+        # Retrieve next, stats and end button so that they can be configured
+        self.next_button = control_ref_list[0]
+        self.stats_button = control_ref_list[2]
+        self.end_game_button = control_ref_list[3]
 
-            # Once interface has been created, invoke new
-            # round function for the first round.
-            self.new_round()
+        # Once interface has been created, invoke new
+        # round function for the first round.
+        self.new_round()
 
     def new_round(self):
         """
@@ -248,17 +248,17 @@ class Play:
         """
 
         # retrieve number of rounds played, add one to it and configure heading
-        rounds_played = self.rounds_played.get()
-        rounds_played += 1
-        self.rounds_played.set(rounds_played)
+        questions_played = self.questions_played.get()
+        questions_played += 1
+        self.questions_played.set(questions_played)
 
-        rounds_wanted = self.rounds_wanted.get()
+        questions_wanted = self.questions_wanted.get()
 
         # get quotes
         self.round_quote_list = get_quotes_list()
 
         # Update heading, and score to beat labels. "Hide" results label
-        self.heading_label.config(text=f"Round {rounds_played} of {rounds_wanted}")
+        self.heading_label.config(text=f"Round {questions_played} of {questions_wanted}")
         self.target_label.config(text=f"if this changes, something's up.", font=("Arial", 14, "bold"))
         self.results_label.config(text=f"{'=' * 7}", bg="#F0F0F0")
 
