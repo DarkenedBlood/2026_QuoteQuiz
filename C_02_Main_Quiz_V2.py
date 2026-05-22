@@ -159,6 +159,7 @@ class Play:
     def __init__(self, how_many):
 
         # rounds played - start with zero
+        self.round_quote_list = []
         self.questions_played = IntVar()
         self.questions_played.set(0)
 
@@ -187,7 +188,7 @@ class Play:
                                     bg=item[2], wraplength=300, justify="left")
             self.make_label.grid(row=item[3], pady=10, padx=10)
 
-            play_labels_ref.append(item)
+            play_labels_ref.append(self.make_label)
 
         # Retrieve Labels so they can be configured later
         self.heading_label = play_labels_ref[0]
@@ -203,7 +204,7 @@ class Play:
         # create five buttons in a 2 x 2 grid
         for item in range(0, 5):
             self.question_button = Button(self.question_frame, font=body_font,
-                                          text="Placeholder", width=15)
+                                          text="Placeholder", width=30)
             self.question_button.grid(row=item // 1,
                                       column=item % 1,
                                       padx=5, pady=5)
@@ -259,13 +260,13 @@ class Play:
 
         # Update heading, and score to beat labels. "Hide" results label
         self.heading_label.config(text=f"Round {questions_played} of {questions_wanted}")
-        self.target_label.config(text=f"if this changes, something's up.", font=("Arial", 14, "bold"))
+        self.target_label.config(text=self.round_quote_list[0], font=("Arial", 14, "bold"))
         self.results_label.config(text=f"{'=' * 7}", bg="#F0F0F0")
 
         # configure buttons using foreground and background colours from list
         # enable colour buttons (disabled at the end of the last round)
         for count, item in enumerate(self.question_button_ref):
-            item.config(text=self.round_quote_list[count][0], state=NORMAL)
+            item.config(text=self.round_quote_list[count], state=NORMAL)
 
         self.next_button.config(state=DISABLED)
 
