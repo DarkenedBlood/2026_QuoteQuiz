@@ -51,7 +51,7 @@ def get_quotes_list():
             fake_quote_list.append(fake_quote[0])
             fake_quote_answers.append(fake_quote[1])
 
-    return round_quotes, correct_quote_answer, fake_quote_list, fake_quote_answers
+    return round_quotes, correct_quote_answer, fake_quote_answers
 
 
 class StartQuiz:
@@ -185,7 +185,7 @@ class Play:
         play_labels_ref = []
         for item in play_labels_list:
             self.make_label = Label(self.quiz_frame, text=item[0], font=item[1],
-                                    bg=item[2], wraplength=300, justify="left")
+                                    bg=item[2], wraplength=500, justify="left")
             self.make_label.grid(row=item[3], pady=10, padx=10)
 
             play_labels_ref.append(self.make_label)
@@ -204,7 +204,7 @@ class Play:
         # create five buttons in a 2 x 2 grid
         for item in range(0, 5):
             self.question_button = Button(self.question_frame, font=body_font,
-                                          text="Placeholder", width=30)
+                                          text="Placeholder", width=49)
             self.question_button.grid(row=item // 1,
                                       column=item % 1,
                                       padx=5, pady=5)
@@ -217,10 +217,10 @@ class Play:
 
         # List for buttons (frame | text | bg | command | width | row | column)
         control_button_list = [
-            [self.quiz_frame, "Next Round", "#0057D8", "", 21, 5, None],
-            [self.hints_stats_frame, "Hints", "#FF8000", "", 10, 0, 0],
-            [self.hints_stats_frame, "Stats", "#333333", "", 10, 0, 1],
-            [self.quiz_frame, "End", "#990000", self.close_play, 21, 7, None]
+            [self.quiz_frame, "Next Round", "#0057D8", "", 34, 5, None],
+            [self.hints_stats_frame, "Hints", "#FF8000", "", 16, 0, 0],
+            [self.hints_stats_frame, "Stats", "#333333", "", 16, 0, 1],
+            [self.quiz_frame, "End", "#990000", self.close_play, 34, 7, None]
         ]
 
         # create buttons and add to list
@@ -255,18 +255,34 @@ class Play:
 
         questions_wanted = self.questions_wanted.get()
 
-        # get quotes
+        # get quote list
         self.round_quote_list = get_quotes_list()
+
+        # retrieve items
+        question_brackets = self.round_quote_list[0]
+        right_answer_brackets = self.round_quote_list[1]
+        wrong_answers = self.round_quote_list[2]
+
+        # split up + remove brackets
+        question = question_brackets[0]
+        right_answer = right_answer_brackets[0]
+
+        wrong_1 = wrong_answers[0]
+        wrong_2 = wrong_answers[1]
+        wrong_3 = wrong_answers[2]
+        wrong_4 = wrong_answers[3]
+
+        answer_list = (right_answer, wrong_1, wrong_2, wrong_3, wrong_4)
 
         # Update heading, and score to beat labels. "Hide" results label
         self.heading_label.config(text=f"Round {questions_played} of {questions_wanted}")
-        self.target_label.config(text=self.round_quote_list[0], font=("Arial", 14, "bold"))
+        self.target_label.config(text=question, font=("Arial", 14, "bold"))
         self.results_label.config(text=f"{'=' * 7}", bg="#F0F0F0")
 
         # configure buttons using foreground and background colours from list
         # enable colour buttons (disabled at the end of the last round)
         for count, item in enumerate(self.question_button_ref):
-            item.config(text=self.round_quote_list[count], state=NORMAL)
+            item.config(text=answer_list[count], state=NORMAL)
 
         self.next_button.config(state=DISABLED)
 
