@@ -272,7 +272,9 @@ class Play:
         wrong_3 = wrong_answers[2]
         wrong_4 = wrong_answers[3]
 
-        answer_list = (right_answer, wrong_1, wrong_2, wrong_3, wrong_4)
+        answer_list = [right_answer, wrong_1, wrong_2, wrong_3, wrong_4]
+
+        random.shuffle(answer_list)
 
         # Update heading, and score to beat labels. "Hide" results label
         self.heading_label.config(text=f"Round {questions_played} of {questions_wanted}")
