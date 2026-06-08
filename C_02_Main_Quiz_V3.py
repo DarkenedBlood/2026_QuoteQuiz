@@ -158,9 +158,6 @@ class Play:
 
     def __init__(self, how_many):
 
-        # Integers / String Variables
-        self.target_score = IntVar()
-
         # rounds played - start with zero
         self.round_quote_list = []
         self.all_scores_list = []
@@ -197,7 +194,7 @@ class Play:
 
         # Retrieve Labels so they can be configured later
         self.heading_label = play_labels_ref[0]
-        self.target_label = play_labels_ref[1]
+        self.quote_label = play_labels_ref[1]
         self.results_label = play_labels_ref[3]
 
         # set up colour buttons...
@@ -223,7 +220,7 @@ class Play:
 
         # List for buttons (frame | text | bg | command | width | row | column)
         control_button_list = [
-            [self.quiz_frame, "Next Round", "#0057D8", "", 34, 5, None],
+            [self.quiz_frame, "Next Round", "#0057D8", self.new_round, 34, 5, None],
             [self.hints_stats_frame, "Hints", "#FF8000", "", 16, 0, 0],
             [self.hints_stats_frame, "Stats", "#333333", "", 16, 0, 1],
             [self.quiz_frame, "End", "#990000", self.close_play, 34, 7, None]
@@ -278,21 +275,23 @@ class Play:
         wrong_3 = wrong_answers[2]
         wrong_4 = wrong_answers[3]
 
-        self.answer_list = [right_answer, wrong_1, wrong_2, wrong_3, wrong_4]
+        self.all_scores_list.append(right_answer)
+
+        answer_list = [right_answer, wrong_1, wrong_2, wrong_3, wrong_4]
 
         print(right_answer)
 
-        random.shuffle(self.answer_list)
+        random.shuffle(answer_list)
 
         # Update heading, and score to beat labels. "Hide" results label
         self.heading_label.config(text=f"Round {questions_played} of {questions_wanted}")
-        self.target_label.config(text=question, font=("Arial", 14, "bold"))
+        self.quote_label.config(text=question, font=("Arial", 14, "bold"))
         self.results_label.config(text=f"{'=' * 7}", bg="#F0F0F0")
 
         # configure buttons using foreground and background colours from list
         # enable colour buttons (disabled at the end of the last round)
         for count, item in enumerate(self.question_button_ref):
-            item.config(text=self.answer_list[count], state=NORMAL)
+            item.config(text=answer_list[count], state=NORMAL)
 
         self.next_button.config(state=DISABLED)
 
@@ -303,15 +302,18 @@ class Play:
         and adds results to stats list.
         """
 
+        print("you invoked round results")
+
         # alternate way to get button name. Good for if buttons have been scrambled
         answer_name = self.question_button_ref[user_choice].cget('text')
 
-        correct_answer_list = ()
+        correct_answer_list = self.all_scores_list[-1]
 
-        if answer_name >= right_answer:
+        if answer_name == correct_answer_list:
             result_text = f"Congrats! {answer_name} was the correct answer!"
             result_bg = "#82B366"
             self.all_scores_list.append(correct_answer_list)
+            print("result text", result_text)
 
         else:
             result_text = f"Oops {answer_name} was not correct."
