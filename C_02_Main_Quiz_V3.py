@@ -71,7 +71,7 @@ class StartQuiz:
         # Strings for labels
         subtitle_string = "A quiz about iconic movie quotes"
 
-        intro_string = ("Every question you will need to choose one of four buttons, one correctly correlating to where the quote came from. "
+        intro_string = ("Every question you will need to choose one of five buttons, one correctly correlating to where the quote came from. "
                         "You will need to pick the right one. Are you up to the task?")
 
         # choose_string = " Oops - Please choose a whole number more than zero."
@@ -181,7 +181,6 @@ class Play:
             ["Question # of #", ("Arial", 16, "bold"), None, 0],
             ["The Quote is: PLACEHOLDER", body_font, "#FFF2CC", 1],
             ["Choose one of these movies, Good luck.", body_font, "#D5E8D4", 2],
-            ["You chose, result", body_font, "#D5E8D4", 3]
         ]
 
         play_labels_ref = []
@@ -195,7 +194,7 @@ class Play:
         # Retrieve Labels so they can be configured later
         self.heading_label = play_labels_ref[0]
         self.quote_label = play_labels_ref[1]
-        self.results_label = play_labels_ref[3]
+        self.results_label = play_labels_ref[2]
 
         # set up colour buttons...
         self.question_frame = Frame(self.quiz_frame)
@@ -286,7 +285,6 @@ class Play:
         # Update heading, and score to beat labels. "Hide" results label
         self.heading_label.config(text=f"Round {questions_played} of {questions_wanted}")
         self.quote_label.config(text=question, font=("Arial", 14, "bold"))
-        self.results_label.config(text=f"{'=' * 7}", bg="#F0F0F0")
 
         # configure buttons using foreground and background colours from list
         # enable colour buttons (disabled at the end of the last round)
