@@ -278,13 +278,12 @@ class Play:
 
         answer_list = [right_answer, wrong_1, wrong_2, wrong_3, wrong_4]
 
-        print(right_answer)
-
         random.shuffle(answer_list)
 
         # Update heading, and score to beat labels. "Hide" results label
         self.heading_label.config(text=f"Round {questions_played} of {questions_wanted}")
         self.quote_label.config(text=question, font=("Arial", 14, "bold"))
+        self.results_label.config(text="Choose one of these movies, Good luck.", bg="#D5E8D4")
 
         # configure buttons using foreground and background colours from list
         # enable colour buttons (disabled at the end of the last round)
@@ -300,8 +299,6 @@ class Play:
         and adds results to stats list.
         """
 
-        print("you invoked round results")
-
         # alternate way to get button name. Good for if buttons have been scrambled
         answer_name = self.question_button_ref[user_choice].cget('text')
 
@@ -311,10 +308,9 @@ class Play:
             result_text = f"Congrats! {answer_name} was the correct answer!"
             result_bg = "#82B366"
             self.all_scores_list.append(correct_answer_list)
-            print("result text", result_text)
 
         else:
-            result_text = f"Oops {answer_name} was not correct."
+            result_text = f"Oops! {answer_name} was not correct. It was {correct_answer_list}."
             result_bg = "#F8CECC"
             self.all_scores_list.append(0)
 
