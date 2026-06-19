@@ -47,7 +47,7 @@ def get_quotes_list():
         fake_quote = random.choice(all_quotes)
 
         # Get the score and check it's not a duplicate
-        if fake_quote[1] not in correct_quote_answer:
+        if fake_quote[1] not in correct_quote_answer and fake_quote[1] not in fake_quote_answers:
             fake_quote_list.append(fake_quote[0])
             fake_quote_answers.append(fake_quote[1])
 
